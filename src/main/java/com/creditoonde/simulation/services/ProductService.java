@@ -1,0 +1,47 @@
+package com.creditoonde.simulation.services;
+
+import com.creditoonde.simulation.domain.Product;
+import com.creditoonde.simulation.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ProductService {
+
+    @Autowired
+    private ProductRepository repository;
+
+    public List<Product> findAll() {
+        return repository.findAll();
+    }
+
+    public Product findById(String id) {
+        Optional<Product> product = repository.findById(id);
+        return product.orElseThrow(() -> new ObjectNotFoundException("Product not found."));
+    }
+
+    public Product insert(Product product) {
+        return repository.insert(product);
+    }
+
+    public void delete(String id) {
+        findById(id);
+        repository.deleteById(id);
+    }
+
+    public Product update(Product product) {
+        Product updated = findById(product.getId());
+        updateData(updated, product);
+        return repository.save(updated);
+    }
+
+    private void updateData(Product updated, Product product) {
+        updated.setName(product.getName());
+        updated.setFinancialInstitution(product.getFinancialInstitution());
+        updated.setMinInterestRate(product.getMinInterestRate());
+        updated.setMaxInterestRate(product.getMaxInterestRate());
+    }
+}
