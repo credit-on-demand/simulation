@@ -22,20 +22,21 @@ public class ProductResource {
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll() {
         List<Product> products = service.findAll();
-        List<ProductDTO> productsDTO = products.stream().map(product -> new ProductDTO(product)).collect(Collectors.toList());
+        List<ProductDTO> productsDTO = products.stream().map(ProductDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(productsDTO);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> findById(@PathVariable String id) {
+    public ResponseEntity<ProductDTO> findById(@PathVariable String id) {
         Product product = service.findById(id);
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok().body( new ProductDTO(product));
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Product product) {
-        Product created = service.insert(product);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri();
+    public ResponseEntity<Void> insert(@RequestBody ProductDTO productDTO) {
+        Product created = service.fromDTO(productDTO);
+        created = service.insert(created);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
@@ -46,7 +47,8 @@ public class ProductResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody Product product) {
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody ProductDTO productDTO) {
+        Product product = service.fromDTO(productDTO);
         product.setId(id);
         service.update(product);
         return ResponseEntity.noContent().build();

@@ -3,6 +3,7 @@ package com.creditoonde.simulation.config;
 import com.creditoonde.simulation.domain.FinancialInstitution;
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.domain.User;
+import com.creditoonde.simulation.dto.FinancialInstitutionDTO;
 import com.creditoonde.simulation.repository.FinancialInstitutionRepository;
 import com.creditoonde.simulation.repository.ProductRepository;
 import com.creditoonde.simulation.repository.UserRepository;
@@ -34,14 +35,18 @@ public class Instatiation implements CommandLineRunner {
 
         financialInstitutionRepository.deleteAll();
         FinancialInstitution sampleBank = new FinancialInstitution(null, "Bank Sample LTD");
-        FinancialInstitution XPTOFinance = new FinancialInstitution(null, "XPTO Finance");
-        financialInstitutionRepository.saveAll(Arrays.asList(sampleBank, XPTOFinance));
+        FinancialInstitution xptoFinance = new FinancialInstitution(null, "XPTO Finance");
+        financialInstitutionRepository.saveAll(Arrays.asList(sampleBank, xptoFinance));
 
         productRepository.deleteAll();
-        Product easyLoan = new Product(null, "Easy loan", "Low interest rate loan.",
-                1.95, 3.05, sampleBank);
-        Product consignedCredit = new Product(null, "Consigned Loan", "Loan with paycheck discounts.",
-                1.55, 2.20, XPTOFinance);
+        Product easyLoan = new Product(null, "Easy loan",
+                1.95, 3.05, new FinancialInstitutionDTO(sampleBank));
+        Product consignedCredit = new Product(null, "Consigned Loan",
+                1.55, 2.20, new FinancialInstitutionDTO(xptoFinance));
         productRepository.saveAll(Arrays.asList(easyLoan, consignedCredit));
+
+        sampleBank.getProducts().addAll(Arrays.asList(easyLoan));
+        xptoFinance.getProducts().addAll(Arrays.asList(consignedCredit));
+        financialInstitutionRepository.saveAll(Arrays.asList(sampleBank, xptoFinance));
     }
 }

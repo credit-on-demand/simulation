@@ -1,5 +1,6 @@
 package com.creditoonde.simulation.domain;
 
+import com.creditoonde.simulation.dto.FinancialInstitutionDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,16 +14,13 @@ public class Product implements Serializable {
     @Id
     private String id;
     private String name;
-    private String description;
     private double minInterestRate;
     private double maxInterestRate;
-    private FinancialInstitution financialInstitution;
+    private FinancialInstitutionDTO financialInstitution;
 
-    public Product(String id, String name, String description, double minInterestRate, double maxInterestRate,
-                   FinancialInstitution financialInstitution) {
+    public Product(String id, String name, double minInterestRate, double maxInterestRate, FinancialInstitutionDTO financialInstitution) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.minInterestRate = minInterestRate;
         this.maxInterestRate = maxInterestRate;
         this.financialInstitution = financialInstitution;
@@ -44,14 +42,6 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getMinInterestRate() {
         return minInterestRate;
     }
@@ -68,11 +58,11 @@ public class Product implements Serializable {
         this.maxInterestRate = maxInterestRate;
     }
 
-    public FinancialInstitution getFinancialInstitution() {
+    public FinancialInstitutionDTO getFinancialInstitution() {
         return financialInstitution;
     }
 
-    public void setFinancialInstitution(FinancialInstitution financialInstitution) {
+    public void setFinancialInstitution(FinancialInstitutionDTO financialInstitution) {
         this.financialInstitution = financialInstitution;
     }
 

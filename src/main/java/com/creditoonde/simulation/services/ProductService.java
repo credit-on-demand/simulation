@@ -1,6 +1,8 @@
 package com.creditoonde.simulation.services;
 
+import com.creditoonde.simulation.domain.FinancialInstitution;
 import com.creditoonde.simulation.domain.Product;
+import com.creditoonde.simulation.dto.ProductDTO;
 import com.creditoonde.simulation.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,9 @@ public class ProductService {
         updated.setFinancialInstitution(product.getFinancialInstitution());
         updated.setMinInterestRate(product.getMinInterestRate());
         updated.setMaxInterestRate(product.getMaxInterestRate());
+    }
+
+    public Product fromDTO(ProductDTO productDTO) {
+        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getMinInterestRate(), productDTO.getMaxInterestRate(), productDTO.getFinancialInstitution());
     }
 }

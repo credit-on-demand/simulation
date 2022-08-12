@@ -1,6 +1,7 @@
 package com.creditoonde.simulation.services;
 
 import com.creditoonde.simulation.domain.FinancialInstitution;
+import com.creditoonde.simulation.dto.FinancialInstitutionDTO;
 import com.creditoonde.simulation.repository.FinancialInstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,9 @@ public class FinancialInstitutionService {
 
     private void updateData(FinancialInstitution updated, FinancialInstitution financialInstitution) {
         updated.setName(financialInstitution.getName());
+    }
+
+    public FinancialInstitution fromDTO(FinancialInstitutionDTO financialInstitutionDTO) {
+        return new FinancialInstitution(financialInstitutionDTO.getId(), financialInstitutionDTO.getName());
     }
 }

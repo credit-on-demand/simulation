@@ -1,6 +1,5 @@
 package com.creditoonde.simulation.dto;
 
-import com.creditoonde.simulation.domain.FinancialInstitution;
 import com.creditoonde.simulation.domain.Product;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ public class ProductDTO implements Serializable {
     private String name;
     private double minInterestRate;
     private double maxInterestRate;
-    private FinancialInstitution financialInstitution;
+    private FinancialInstitutionDTO financialInstitution;
 
     public ProductDTO() {
     }
@@ -57,11 +56,11 @@ public class ProductDTO implements Serializable {
         this.maxInterestRate = maxInterestRate;
     }
 
-    public FinancialInstitution getFinancialInstitution() {
+    public FinancialInstitutionDTO getFinancialInstitution() {
         return financialInstitution;
     }
 
-    public void setFinancialInstitution(FinancialInstitution financialInstitution) {
+    public void setFinancialInstitution(FinancialInstitutionDTO financialInstitution) {
         this.financialInstitution = financialInstitution;
     }
 }
