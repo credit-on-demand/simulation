@@ -11,7 +11,7 @@ public class ProductDTO implements Serializable {
     private String name;
     private double minInterestRate;
     private double maxInterestRate;
-    private FinancialInstitutionDTO financialInstitution;
+    private String financialInstitution;
 
     public ProductDTO() {
     }
@@ -56,11 +56,11 @@ public class ProductDTO implements Serializable {
         this.maxInterestRate = maxInterestRate;
     }
 
-    public FinancialInstitutionDTO getFinancialInstitution() {
+    public String getFinancialInstitution() {
         return financialInstitution;
     }
 
-    public void setFinancialInstitution(FinancialInstitutionDTO financialInstitution) {
+    public void setFinancialInstitution(String financialInstitution) {
         this.financialInstitution = financialInstitution;
     }
 }

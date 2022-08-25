@@ -1,6 +1,5 @@
 package com.creditoonde.simulation.domain;
 
-import com.creditoonde.simulation.dto.FinancialInstitutionDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,9 +15,9 @@ public class Product implements Serializable {
     private String name;
     private double minInterestRate;
     private double maxInterestRate;
-    private FinancialInstitutionDTO financialInstitution;
+    private String financialInstitution;
 
-    public Product(String id, String name, double minInterestRate, double maxInterestRate, FinancialInstitutionDTO financialInstitution) {
+    public Product(String id, String name, double minInterestRate, double maxInterestRate, String financialInstitution) {
         this.id = id;
         this.name = name;
         this.minInterestRate = minInterestRate;
@@ -58,11 +57,11 @@ public class Product implements Serializable {
         this.maxInterestRate = maxInterestRate;
     }
 
-    public FinancialInstitutionDTO getFinancialInstitution() {
+    public String getFinancialInstitution() {
         return financialInstitution;
     }
 
-    public void setFinancialInstitution(FinancialInstitutionDTO financialInstitution) {
+    public void setFinancialInstitution(String financialInstitution) {
         this.financialInstitution = financialInstitution;
     }
 

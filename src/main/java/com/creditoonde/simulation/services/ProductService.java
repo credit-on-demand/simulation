@@ -1,6 +1,5 @@
 package com.creditoonde.simulation.services;
 
-import com.creditoonde.simulation.domain.FinancialInstitution;
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.dto.ProductDTO;
 import com.creditoonde.simulation.repository.ProductRepository;
