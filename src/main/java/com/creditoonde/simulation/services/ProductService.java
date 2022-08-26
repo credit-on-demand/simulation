@@ -1,5 +1,6 @@
 package com.creditoonde.simulation.services;
 
+import com.creditoonde.simulation.controller.exception.ObjectNotFoundException;
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.dto.ProductDTO;
 import com.creditoonde.simulation.repository.ProductRepository;
@@ -22,6 +23,10 @@ public class ProductService {
     public Product findById(String id) {
         Optional<Product> product = repository.findById(id);
         return product.orElseThrow(() -> new ObjectNotFoundException("Product not found."));
+    }
+
+    public List<Product> findByFinancialInstitution(String name) {
+        return repository.findByFinancialInstitutionContainingIgnoreCase(name);
     }
 
     public Product insert(Product product) {

@@ -2,15 +2,23 @@ package com.creditoonde.simulation.dto;
 
 import com.creditoonde.simulation.domain.Product;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 
 public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
+    @NotNull(message = "Product's name cannot be null")
     private String name;
-    private double minInterestRate;
-    private double maxInterestRate;
+    @NotNull(message = "Product's minInterestRate cannot be null")
+    @Positive(message = "Product's minInterestRate must be greater than zero")
+    private Double minInterestRate;
+    @NotNull(message = "Product's maxInterestRate cannot be null")
+    @Positive(message = "Product's maxInterestRate must be greater than zero")
+    private Double maxInterestRate;
+    @NotNull(message = "Product's financialInstitution cannot be null")
     private String financialInstitution;
 
     public ProductDTO() {

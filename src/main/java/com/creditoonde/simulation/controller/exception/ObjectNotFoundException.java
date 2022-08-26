@@ -1,4 +1,4 @@
-package com.creditoonde.simulation.services;
+package com.creditoonde.simulation.controller.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;

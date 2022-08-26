@@ -14,7 +14,7 @@ class SimulationHelperTest {
     SimulationHelper simulationHelper;
 
     @Test
-    void shouldCalculateInstalmentValue(){
+    void shouldCalculateInstalmentValue() {
         simulationHelper = new SimulationHelper();
         BigDecimal totalAmount = new BigDecimal("1200");
         BigDecimal monthlyInterest = new BigDecimal("0.02");

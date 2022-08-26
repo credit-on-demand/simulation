@@ -1,20 +1,22 @@
-package com.creditoonde.simulation.resources;
+package com.creditoonde.simulation.controller;
 
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.dto.ProductDTO;
+import com.creditoonde.simulation.helper.URLHelper;
 import com.creditoonde.simulation.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/products")
-public class ProductResource {
+public class ProductController {
 
     @Autowired
     private ProductService service;
@@ -29,11 +31,19 @@ public class ProductResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable String id) {
         Product product = service.findById(id);
-        return ResponseEntity.ok().body( new ProductDTO(product));
+        return ResponseEntity.ok().body(new ProductDTO(product));
+    }
+
+    @GetMapping(value = "/financialInstitution")
+    public ResponseEntity<List<ProductDTO>> findByFinancialInstitution(@RequestParam(value = "name", defaultValue = "") String name) {
+        name = URLHelper.decodeParam(name);
+        List<Product> products = service.findByFinancialInstitution(name);
+        List<ProductDTO> productsDTO = products.stream().map(ProductDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(productsDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ProductDTO productDTO) {
         Product created = service.fromDTO(productDTO);
         created = service.insert(created);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.getId()).toUri();
@@ -47,7 +57,7 @@ public class ProductResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Void> update(@PathVariable String id, @Valid @RequestBody ProductDTO productDTO) {
         Product product = service.fromDTO(productDTO);
         product.setId(id);
         service.update(product);

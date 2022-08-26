@@ -1,4 +1,4 @@
-package com.creditoonde.simulation.resources.exception;
+package com.creditoonde.simulation.controller.exception;
 
 import java.io.Serializable;
 
@@ -8,18 +8,18 @@ public class StandardError implements Serializable {
     private Long timestamp;
     private Integer status;
     private String error;
-    private String message;
+    private String messages;
     private String path;
 
     public StandardError() {
     }
 
-    public StandardError(Long timestamp, Integer status, String error, String message, String path) {
+    public StandardError(Long timestamp, Integer status, String error, String messages, String path) {
         super();
         this.timestamp = timestamp;
         this.status = status;
         this.error = error;
-        this.message = message;
+        this.messages = messages;
         this.path = path;
     }
 
@@ -47,12 +47,12 @@ public class StandardError implements Serializable {
         this.error = error;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessages() {
+        return messages;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessages(String messages) {
+        this.messages = messages;
     }
 
     public String getPath() {
