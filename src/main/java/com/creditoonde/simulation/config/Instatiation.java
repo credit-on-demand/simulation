@@ -1,7 +1,7 @@
 package com.creditoonde.simulation.config;
 
-import com.creditoonde.simulation.domain.User;
-import com.creditoonde.simulation.repository.UserRepository;
+import com.creditoonde.simulation.domain.Product;
+import com.creditoonde.simulation.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +12,15 @@ import java.util.Arrays;
 public class Instatiation implements CommandLineRunner {
 
     @Autowired
-    private UserRepository userRepository;
+    private ProductRepository productRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.deleteAll();
-
-        User maria = new User(null, "Maria Brown", "maria@gmail.com");
-        User alex = new User(null, "Alex Green", "alex@gmail.com");
-        User bob = new User(null, "BobGrey", "bob@gmail.com");
-
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+        productRepository.deleteAll();
+        Product easyLoan = new Product(null, "Easy loan",
+                1.95, 3.05, "Bank Sample LTD");
+        Product consignedCredit = new Product(null, "Consigned Loan",
+                1.55, 2.20, "XPTO Finance");
+        productRepository.saveAll(Arrays.asList(easyLoan, consignedCredit));
     }
 }
