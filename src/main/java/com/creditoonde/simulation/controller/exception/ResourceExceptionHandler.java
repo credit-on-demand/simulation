@@ -26,11 +26,17 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> requestBodyNotValid(MethodArgumentNotValidException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = new ArrayList<>();
-        e.getBindingResult().getAllErrors().forEach((error) -> {
-            errors.add(error.getDefaultMessage());
-        });
+        e.getBindingResult().getAllErrors().forEach(error -> errors.add(error.getDefaultMessage()));
         StandardError stdError = new StandardError(System.currentTimeMillis(), status.value(), "Request body is not valid.",
                 errors.stream().collect(Collectors.joining(", ")), request.getRequestURI());
+        return ResponseEntity.status(status).body(stdError);
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<StandardError> simulationValuesNotValid(NumberFormatException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        StandardError stdError = new StandardError(System.currentTimeMillis(), status.value(), "Simulation values are not valid.",
+                e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(stdError);
     }
 }

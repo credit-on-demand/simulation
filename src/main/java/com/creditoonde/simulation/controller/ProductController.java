@@ -3,7 +3,7 @@ package com.creditoonde.simulation.controller;
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.dto.ProductDTO;
 import com.creditoonde.simulation.helper.URLHelper;
-import com.creditoonde.simulation.services.ProductService;
+import com.creditoonde.simulation.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

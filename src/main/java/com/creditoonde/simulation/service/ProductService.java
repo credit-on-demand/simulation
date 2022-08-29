@@ -1,4 +1,4 @@
-package com.creditoonde.simulation.services;
+package com.creditoonde.simulation.service;
 
 import com.creditoonde.simulation.controller.exception.ObjectNotFoundException;
 import com.creditoonde.simulation.domain.Product;
