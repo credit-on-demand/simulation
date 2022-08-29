@@ -1,5 +1,6 @@
 package com.creditoonde.simulation.service;
 
+import com.creditoonde.simulation.controller.exception.ObjectNotFoundException;
 import com.creditoonde.simulation.domain.Product;
 import com.creditoonde.simulation.domain.Simulation;
 import com.creditoonde.simulation.dto.SimulationDTO;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimulationService {
@@ -42,6 +45,20 @@ public class SimulationService {
 
     public Simulation insert(Simulation simulation) {
         return repository.insert(simulation);
+    }
+
+    public List<Simulation> findAll() {
+        return repository.findAll();
+    }
+
+    public Simulation findById(String id) {
+        Optional<Simulation> simulation = repository.findById(id);
+        return simulation.orElseThrow(() -> new ObjectNotFoundException("Simulation not found."));
+    }
+
+    public void delete(String id) {
+        findById(id);
+        repository.deleteById(id);
     }
 
     public boolean monthlyInterestRateIsValid(String productId, double monthlyInterestRate) {
