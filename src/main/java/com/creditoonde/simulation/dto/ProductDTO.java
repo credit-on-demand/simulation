@@ -18,6 +18,8 @@ public class ProductDTO implements Serializable {
     private String id;
     @NotNull(message = "Product's name cannot be null")
     private String name;
+    @NotNull(message = "Product's rate indexer cannot be null")
+    private String rateIndexer;
     @NotNull(message = "Product's minInterestRate cannot be null")
     @Positive(message = "Product's minInterestRate must be greater than zero")
     private Double minInterestRate;
@@ -30,6 +32,7 @@ public class ProductDTO implements Serializable {
     public ProductDTO(Product product) {
         id = product.getId();
         name = product.getName();
+        rateIndexer = product.getRateIndexer();
         minInterestRate = product.getMinInterestRate();
         maxInterestRate = product.getMaxInterestRate();
         financialInstitution = product.getFinancialInstitution();

@@ -52,6 +52,8 @@ public class ProductService {
     }
 
     public Product fromDTO(ProductDTO productDTO) {
-        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getMinInterestRate(), productDTO.getMaxInterestRate(), productDTO.getFinancialInstitution());
+        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getRateIndexer(),
+                productDTO.getMinInterestRate(), productDTO.getMaxInterestRate(),
+                productDTO.getFinancialInstitution());
     }
 }
