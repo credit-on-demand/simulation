@@ -21,9 +21,9 @@ public class Instatiation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         productRepository.deleteAll();
-        Product easyLoan = new Product(null, "Easy loan",
+        Product easyLoan = new Product(null, "Easy loan", "PRE_FIXED",
                 1.95, 3.05, "Bank Sample LTD");
-        Product consignedCredit = new Product(null, "Consigned Loan",
+        Product consignedCredit = new Product(null, "Consigned Loan", "CDI",
                 1.55, 2.20, "XPTO Finance");
         productRepository.saveAll(Arrays.asList(easyLoan, consignedCredit));
         simulationRepository.deleteAll();
