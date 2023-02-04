@@ -14,12 +14,16 @@ public class SimulationHelper {
                 || monthlyInterestRate.compareTo(BigDecimal.ZERO) == 0 || totalAmount.compareTo(BigDecimal.ZERO) == 0) {
             throw new NumberFormatException("One or more simulation values are invalid.");
         }
-        monthlyInterestRate = monthlyInterestRate.divide(new BigDecimal(100), 4, RoundingMode.HALF_UP);
+        monthlyInterestRate = monthlyInterestRate.divide(new BigDecimal(100), 6, RoundingMode.HALF_UP);
         BigDecimal commonPow = monthlyInterestRate.add(new BigDecimal(1)).pow(instalmentsQuantity);
         BigDecimal fractionUp = commonPow.multiply(monthlyInterestRate);
         BigDecimal fractionDown = commonPow.subtract(new BigDecimal(1));
-        BigDecimal fractionResult = fractionUp.divide(fractionDown, 5, RoundingMode.HALF_UP);
+        BigDecimal fractionResult = fractionUp.divide(fractionDown, 6, RoundingMode.HALF_UP);
 
         return totalAmount.multiply(fractionResult).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal calculateTotalAmount(int instalmentsQuantity, BigDecimal instalmentValue) {
+        return instalmentValue.multiply(BigDecimal.valueOf(instalmentsQuantity)).setScale(2, RoundingMode.HALF_UP);
     }
 }

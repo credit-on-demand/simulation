@@ -22,8 +22,9 @@ public class Simulation implements Serializable {
     private String id;
     private Integer instalmentsQuantity;
     private Double monthlyInterestRate;
-    private Double totalAmount;
+    private Double requestedAmount;
     private Double instalmentValue;
     private String productId;
+    private Double totalAmount;
     private LocalDateTime simulationDate;
 }
