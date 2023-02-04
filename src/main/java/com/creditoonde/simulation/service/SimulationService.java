@@ -28,17 +28,20 @@ public class SimulationService {
             throw new NumberFormatException("The monthly interest rate must be between the product's minimum and maximum rates.");
         }
         BigDecimal monthlyInterest = BigDecimal.valueOf(simulationDTO.getMonthlyInterestRate());
-        BigDecimal totalAmount = BigDecimal.valueOf(simulationDTO.getTotalAmount());
-        double instalmentValue = SimulationHelper
-                .calculateInstalmentValue(simulationDTO.getInstalmentsQuantity(), monthlyInterest, totalAmount).doubleValue();
+        BigDecimal requestedAmount = BigDecimal.valueOf(simulationDTO.getRequestedAmount());
+        BigDecimal instalmentValue = SimulationHelper
+                .calculateInstalmentValue(simulationDTO.getInstalmentsQuantity(), monthlyInterest, requestedAmount);
+        BigDecimal totalAmount = SimulationHelper
+                .calculateTotalAmount(simulationDTO.getInstalmentsQuantity(), instalmentValue);
         Simulation simulation =
                 Simulation.builder()
                         .id(null)
                         .instalmentsQuantity(simulationDTO.getInstalmentsQuantity())
                         .monthlyInterestRate(simulationDTO.getMonthlyInterestRate())
-                        .totalAmount(simulationDTO.getTotalAmount())
+                        .requestedAmount(simulationDTO.getRequestedAmount())
                         .productId(simulationDTO.getProductId())
-                        .instalmentValue(instalmentValue)
+                        .instalmentValue(instalmentValue.doubleValue())
+                        .totalAmount(totalAmount.doubleValue())
                         .simulationDate(LocalDateTime.now()).build();
         return insert(simulation);
     }

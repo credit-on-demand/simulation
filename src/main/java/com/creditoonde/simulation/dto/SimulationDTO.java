@@ -24,7 +24,7 @@ public class SimulationDTO implements Serializable {
     @NotNull(message = "Simulation's monthlyInterestRate cannot be null")
     @Positive(message = "Simulation's monthlyInterestRate must be greater than zero")
     private Double monthlyInterestRate;
-    @NotNull(message = "Simulation's totalAmount cannot be null")
-    @Positive(message = "Simulation's totalAmount must be greater than zero")
-    private Double totalAmount;
+    @NotNull(message = "Simulation's requestedAmount cannot be null")
+    @Positive(message = "Simulation's requestedAmount must be greater than zero")
+    private Double requestedAmount;
 }
