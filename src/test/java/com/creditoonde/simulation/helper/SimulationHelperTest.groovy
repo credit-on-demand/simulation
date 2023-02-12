@@ -1,6 +1,5 @@
 package com.creditoonde.simulation.helper
 
-import com.creditoonde.simulation.helper.SimulationHelper
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 import spock.lang.Unroll

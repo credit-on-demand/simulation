@@ -19,7 +19,7 @@ public class Product implements Serializable {
     private String id;
     private String name;
     private String rateIndexer;
-    private double minInterestRate;
-    private double maxInterestRate;
+    private Double minInterestRate;
+    private Double maxInterestRate;
     private String financialInstitution;
 }
