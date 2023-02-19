@@ -1,10 +1,8 @@
 package com.creditoonde.simulation.helper
 
-import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 import spock.lang.Unroll
 
-@SpringBootTest
 class SimulationHelperTest extends Specification {
 
     @Unroll

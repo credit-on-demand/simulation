@@ -84,9 +84,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
+            <groupId>org.apache.groovy</groupId>
             <artifactId>groovy-json</artifactId>
-            <version>3.0.9</version>
+            <version>4.0.8</version>
         </dependency>
     </dependencies>
 

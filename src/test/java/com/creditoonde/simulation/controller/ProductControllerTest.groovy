@@ -56,11 +56,11 @@ class ProductControllerTest extends Specification {
         then:
         result.andExpect(status().isOk())
                 .andExpect(jsonPath('id').value(id))
-                .andExpect(jsonPath('name').value('product'))
-                .andExpect(jsonPath('rateIndexer').value('indexer'))
-                .andExpect(jsonPath('minInterestRate').value(1.0))
-                .andExpect(jsonPath('maxInterestRate').value(2.5))
-                .andExpect(jsonPath('financialInstitution').value('institution'))
+                .andExpect(jsonPath('name').value(product.getName()))
+                .andExpect(jsonPath('rateIndexer').value(product.getRateIndexer()))
+                .andExpect(jsonPath('minInterestRate').value(product.getMinInterestRate()))
+                .andExpect(jsonPath('maxInterestRate').value(product.getMaxInterestRate()))
+                .andExpect(jsonPath('financialInstitution').value(product.getFinancialInstitution()))
     }
 
     def 'Should return products filtered by financial institution in the response body'() {
@@ -82,12 +82,13 @@ class ProductControllerTest extends Specification {
         given:
         def product = new Product('id1', 'product', 'indexer', 1.0, 2.5, 'institution')
         1 * productService.insert(_) >> product
-        def request =
-                [name                : 'product',
-                 rateIndexer         : 'indexer',
-                 minInterestRate     : 1.0,
-                 maxInterestRate     : 2.5,
-                 financialInstitution: 'institution']
+        def request = [
+                name                : 'product',
+                rateIndexer         : 'indexer',
+                minInterestRate     : 1.0,
+                maxInterestRate     : 2.5,
+                financialInstitution: 'institution'
+        ]
 
         when:
         def result = mvc.perform(post('/products').contentType('application/json').content(toJson(request)))
@@ -117,12 +118,13 @@ class ProductControllerTest extends Specification {
         1 * productService.fromDTO(_) >> product
         1 * productService.update(product)
 
-        def request =
-                [name                : 'product',
-                 rateIndexer         : 'indexer',
-                 minInterestRate     : 1.0,
-                 maxInterestRate     : 2.5,
-                 financialInstitution: 'institution']
+        def request = [
+                name                : 'product',
+                rateIndexer         : 'indexer',
+                minInterestRate     : 1.0,
+                maxInterestRate     : 2.5,
+                financialInstitution: 'institution'
+        ]
 
         when:
         def result = mvc.perform(put('/products/' + id).contentType('application/json').content(toJson(request)))
