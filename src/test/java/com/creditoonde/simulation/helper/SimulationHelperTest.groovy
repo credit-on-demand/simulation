@@ -8,7 +8,7 @@ import spock.lang.Unroll
 class SimulationHelperTest extends Specification {
 
     @Unroll
-    def "Should calculate instalment value"() {
+    def 'Should calculate instalment value'() {
         expect:
         SimulationHelper
                 .calculateInstalmentValue(instalmentsQuantity, monthlyInterest, totalAmount) == result
@@ -22,13 +22,13 @@ class SimulationHelperTest extends Specification {
     }
 
     @Unroll
-    def "Should show error message when calculating instalment values are invalid"() {
+    def 'Should show error message when calculating instalment values are invalid'() {
         when:
         SimulationHelper
                 .calculateInstalmentValue(instalmentsQuantity, monthlyInterest, totalAmount)
         then:
         def e = thrown(NumberFormatException)
-        e.getMessage() == "One or more simulation values are invalid."
+        e.getMessage() == 'One or more simulation values are invalid.'
 
         where:
         instalmentsQuantity | monthlyInterest       | totalAmount
@@ -40,7 +40,7 @@ class SimulationHelperTest extends Specification {
     }
 
     @Unroll
-    def "Should calculate total amount"() {
+    def 'Should calculate total amount'() {
         expect:
         SimulationHelper
                 .calculateTotalAmount(instalmentsQuantity, instalmentsValue) == result
@@ -53,14 +53,14 @@ class SimulationHelperTest extends Specification {
     }
 
     @Unroll
-    def "Should show error message when calculating total amount values are invalid"() {
+    def 'Should show error message when calculating total amount values are invalid'() {
         when:
         SimulationHelper
                 .calculateTotalAmount(instalmentsQuantity, instalmentsValue)
 
         then:
         def e = thrown(NumberFormatException)
-        e.getMessage() == "One or more values are invalid."
+        e.getMessage() == 'One or more values are invalid.'
 
         where:
         instalmentsQuantity | instalmentsValue

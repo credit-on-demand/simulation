@@ -21,9 +21,9 @@ class ProductServiceTest extends Specification {
         productService = new ProductService(repository: productRepository)
     }
 
-    def "Should insert a product and return it"() {
+    def 'Should insert a product and return it'() {
         given:
-        def product = new Product("id1", "product1", "indexer1", 1.0, 2.0, "institution1")
+        def product = new Product('id1', 'product1', 'indexer1', 1.0, 2.0, 'institution1')
         1 * productRepository.insert(product) >> product
 
         when:
@@ -33,11 +33,11 @@ class ProductServiceTest extends Specification {
         created == product
     }
 
-    def "Should find all products"() {
+    def 'Should find all products'() {
         given:
         def productList =
-                [new Product("id1", "product1", "indexer1", 1.0, 2.0, "institution1"),
-                 new Product("id2", "product2", "indexer2", 3.0, 4.0, "institution2")]
+                [new Product('id1', 'product1', 'indexer1', 1.0, 2.0, 'institution1'),
+                 new Product('id2', 'product2', 'indexer2', 3.0, 4.0, 'institution2')]
         1 * productRepository.findAll() >> productList
 
         when:
@@ -47,62 +47,62 @@ class ProductServiceTest extends Specification {
         result == productList
     }
 
-    def "Should find product by id when product exists"() {
+    def 'Should find product by id when product exists'() {
         given:
-        def product = new Product("id1", "product1", "indexer1", 1.0, 2.0, "institution1")
-        1 * productRepository.findById("id1") >> Optional.of(product)
+        def product = new Product('id1', 'product1', 'indexer1', 1.0, 2.0, 'institution1')
+        1 * productRepository.findById('id1') >> Optional.of(product)
 
         when:
-        def result = productService.findById("id1")
+        def result = productService.findById('id1')
 
         then:
         result == product
     }
 
-    def "Should throw exception when product does not exist"() {
+    def 'Should throw exception when product does not exist'() {
         given:
-        productRepository.findById("id1") >> Optional.empty()
+        productRepository.findById('id1') >> Optional.empty()
 
         when:
-        productService.findById("id1")
+        productService.findById('id1')
 
         then:
         def t = thrown(ObjectNotFoundException)
-        t.message == "Product not found."
+        t.message == 'Product not found.'
     }
 
-    def "Should find product by FinancialInstitution"() {
+    def 'Should find product by FinancialInstitution'() {
         given:
         def productList =
-                [new Product("id1", "product1", "indexer1", 1.0, 2.0, "institution1"),
-                 new Product("id2", "product2", "indexer2", 3.0, 4.0, "institution1")]
-        1 * productRepository.findByFinancialInstitutionContainingIgnoreCase("institution1") >> productList
+                [new Product('id1', 'product1', 'indexer1', 1.0, 2.0, 'institution1'),
+                 new Product('id2', 'product2', 'indexer2', 3.0, 4.0, 'institution1')]
+        1 * productRepository.findByFinancialInstitutionContainingIgnoreCase('institution1') >> productList
 
         when:
-        def result = productService.findByFinancialInstitution("institution1")
+        def result = productService.findByFinancialInstitution('institution1')
 
         then:
         result == productList
     }
 
-    def "Should delete a product"() {
+    def 'Should delete a product'() {
         given:
-        def product = new Product("id1", "product1", "indexer1", 1.0, 2.0, "institution1")
+        def product = new Product('id1', 'product1', 'indexer1', 1.0, 2.0, 'institution1')
 
         when:
-        productService.delete("id1")
+        productService.delete('id1')
 
         then:
-        1 * productRepository.findById("id1") >> Optional.of(product)
-        1 * productRepository.deleteById("id1")
+        1 * productRepository.findById('id1') >> Optional.of(product)
+        1 * productRepository.deleteById('id1')
     }
 
-    def "Should update a product and return it"() {
+    def 'Should update a product and return it'() {
         given:
-        def product = new Product("123", "Test product", "CDI", 5.5, 10.0, "Financial Institution")
-        def updatedProduct = new Product("123", "Test product updated", "CDI", 5.5, 10.0, "Financial Institution")
+        def product = new Product('123', 'Test product', 'CDI', 5.5, 10.0, 'Financial Institution')
+        def updatedProduct = new Product('123', 'Test product updated', 'CDI', 5.5, 10.0, 'Financial Institution')
         1 * productRepository.save(product) >> updatedProduct
-        1 * productRepository.findById("123") >> Optional.of(product)
+        1 * productRepository.findById('123') >> Optional.of(product)
 
         when:
         def result = productService.update(updatedProduct)
@@ -111,18 +111,18 @@ class ProductServiceTest extends Specification {
         result == updatedProduct
     }
 
-    def "Should convert ProductDTO to new Product"() {
+    def 'Should convert ProductDTO to new Product'() {
         given:
-        def productDTO = new ProductDTO(id: "123", name: "test", financialInstitution: "institution",
-                minInterestRate: 0.1, maxInterestRate: 0.2, rateIndexer: "indexer")
+        def productDTO = new ProductDTO(id: '123', name: 'test', financialInstitution: 'institution',
+                minInterestRate: 0.1, maxInterestRate: 0.2, rateIndexer: 'indexer')
 
         when:
         def product = productService.fromDTO(productDTO)
 
         then:
-        product.id == "123"
-        product.name == "test"
-        product.financialInstitution == "institution"
+        product.id == '123'
+        product.name == 'test'
+        product.financialInstitution == 'institution'
         product.minInterestRate == 0.1
         product.maxInterestRate == 0.2
     }
