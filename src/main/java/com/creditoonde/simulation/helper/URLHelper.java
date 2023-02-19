@@ -12,7 +12,7 @@ public class URLHelper {
     public static String decodeParam(String text) {
         try {
             return URLDecoder.decode(text, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (IllegalArgumentException | UnsupportedEncodingException e) {
             return "";
         }
     }
