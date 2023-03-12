@@ -5,14 +5,12 @@ import com.creditoonde.simulation.domain.Product
 import com.creditoonde.simulation.domain.Simulation
 import com.creditoonde.simulation.dto.SimulationDTO
 import com.creditoonde.simulation.repository.SimulationRepository
-import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import java.time.LocalDateTime
 
-@SpringBootTest
 class SimulationServiceTest extends Specification {
 
     @Shared

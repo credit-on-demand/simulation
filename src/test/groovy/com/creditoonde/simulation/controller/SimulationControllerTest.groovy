@@ -1,13 +1,12 @@
 package com.creditoonde.simulation.controller
 
 import com.creditoonde.simulation.controller.exception.ObjectNotFoundException
+import com.creditoonde.simulation.controller.exception.ResourceExceptionHandler
 import com.creditoonde.simulation.domain.Simulation
 import com.creditoonde.simulation.service.SimulationService
-import org.spockframework.spring.SpringBean
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import spock.lang.Shared
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -18,14 +17,22 @@ import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@AutoConfigureMockMvc
-@SpringBootTest
 class SimulationControllerTest extends Specification {
 
-    @Autowired
+    @Shared
     MockMvc mvc
-    @SpringBean
-    SimulationService simulationService = Mock()
+    @Shared
+    SimulationService simulationService
+    @Shared
+    SimulationController simulationController
+
+    def setup() {
+        simulationService = Mock()
+        simulationController = new SimulationController(service: simulationService)
+        mvc = MockMvcBuilders.standaloneSetup(simulationController)
+                .setControllerAdvice(new ResourceExceptionHandler())
+                .build()
+    }
 
     def 'Should create a simulation and return status created, empty response body and location header'() {
         given:

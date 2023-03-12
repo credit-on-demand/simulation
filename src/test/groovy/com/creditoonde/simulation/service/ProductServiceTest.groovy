@@ -4,11 +4,9 @@ import com.creditoonde.simulation.controller.exception.ObjectNotFoundException
 import com.creditoonde.simulation.domain.Product
 import com.creditoonde.simulation.dto.ProductDTO
 import com.creditoonde.simulation.repository.ProductRepository
-import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Shared
 import spock.lang.Specification
 
-@SpringBootTest
 class ProductServiceTest extends Specification {
 
     @Shared

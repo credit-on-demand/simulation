@@ -1,13 +1,12 @@
 package com.creditoonde.simulation.controller
 
 import com.creditoonde.simulation.controller.exception.ObjectNotFoundException
+import com.creditoonde.simulation.controller.exception.ResourceExceptionHandler
 import com.creditoonde.simulation.domain.Product
 import com.creditoonde.simulation.service.ProductService
-import org.spockframework.spring.SpringBean
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import spock.lang.Shared
 import spock.lang.Specification
 
 import static groovy.json.JsonOutput.toJson
@@ -16,14 +15,22 @@ import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@AutoConfigureMockMvc
-@SpringBootTest
 class ProductControllerTest extends Specification {
 
-    @Autowired
+    @Shared
     MockMvc mvc
-    @SpringBean
-    ProductService productService = Mock()
+    @Shared
+    ProductService productService
+    @Shared
+    ProductController productController
+
+    def setup() {
+        productService = Mock()
+        productController = new ProductController(service: productService)
+        mvc = MockMvcBuilders.standaloneSetup(productController)
+                .setControllerAdvice(new ResourceExceptionHandler())
+                .build()
+    }
 
     def 'Should return all products in the response body'() {
         given:
