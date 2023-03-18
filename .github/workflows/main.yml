@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-test:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,11 +22,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+#      - name: Build with Maven
+#        run: mvn -B package --file pom.xml
+      - name: Run tests with Maven
+        run: mvn test --file pom.xml
 
   build-and-push-image:
-    needs: build-and-test
+    needs: run-tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
