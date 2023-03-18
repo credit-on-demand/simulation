@@ -3,9 +3,11 @@ name: Main workflow
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
   workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-test:
@@ -23,36 +25,47 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-  publish:
+  build-and-push-image:
     needs: build-and-test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
+      - name: Checkout repository
       - uses: actions/checkout@v3
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
+      #      - name: Set up JDK 11
+      #        uses: actions/setup-java@v3
+      #        with:
+      #          java-version: '11'
+      #          distribution: 'temurin'
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ghcr.io/credit-on-demand/simulation:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Publish Docker image to GitHub Packages
-        uses: docker/metadata-action@v3
-        with:
-          images: ghcr.io/credit-on-demand/simulation:latest
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Publish Docker image to GitHub Packages
+#        uses: docker/metadata-action@v3
+#        with:
+#          images: ghcr.io/credit-on-demand/simulation:latest
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
