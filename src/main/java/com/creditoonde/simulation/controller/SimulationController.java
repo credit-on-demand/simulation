@@ -19,6 +19,7 @@ public class SimulationController {
     @Autowired
     private SimulationService service;
 
+    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<Simulation> simulate(@Valid @RequestBody SimulationDTO simulationDTO) {
         Simulation simulation = service.simulate(simulationDTO);

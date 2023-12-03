@@ -21,6 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    @CrossOrigin(origins = "*")
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll() {
         List<Product> products = service.findAll();
